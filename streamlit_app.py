@@ -164,13 +164,13 @@ with col1:
                 st.subheader("📊 Результаты расчета:")
                 
                 if round_trip:
-                    st.write(f"⛽ **Топливо для полета туда:** {result.outbound_fuel_mass:,.0f} кг ({result.outbound_fuel_mass/1000:.1f} тонн)")
-                    st.write(f"⛽ **Топливо для обратного полета:** {result.return_fuel_mass:,.0f} кг ({result.return_fuel_mass/1000:.1f} тонн)")
-                    total_fuel = result.outbound_fuel_mass + result.return_fuel_mass
+                    st.write(f"⛽ **Топливо для полета туда:** {result.outbound_fuel:,.0f} кг ({result.outbound_fuel/1000:.1f} тонн)")
+                    st.write(f"⛽ **Топливо для обратного полета:** {result.return_fuel:,.0f} кг ({result.return_fuel/1000:.1f} тонн)")
+                    total_fuel = result.total_fuel
                     st.write(f"⛽ **ОБЩЕЕ КОЛИЧЕСТВО ТОПЛИВА:** {total_fuel:,.0f} кг ({total_fuel/1000:.1f} тонн)")
                 else:
-                    st.write(f"⛽ **Необходимое топливо:** {result.fuel_mass:,.0f} кг ({result.fuel_mass/1000:.1f} тонн)")
-                    total_fuel = result.fuel_mass
+                    st.write(f"⛽ **Необходимое топливо:** {result.total_fuel:,.0f} кг ({result.total_fuel/1000:.1f} тонн)")
+                    total_fuel = result.total_fuel
                 
                 # Анализ эффективности
                 fuel_ratio = total_fuel / payload_mass
@@ -212,7 +212,7 @@ with col2:
     st.subheader(f"🔧 {selected_engine.name}")
     st.write(f"**Тип:** {selected_engine.engine_type.value}")
     st.write(f"**Удельный импульс:** {selected_engine.specific_impulse:.0f} с")
-    st.write(f"**Тяга:** {selected_engine.thrust:,.0f} Н ({selected_engine.thrust/1000:.0f} кН)")
+    st.write(f"**Тяга:** {selected_engine.thrust:,.0f} Н ({selected_engine.thrust/1000:.1f} кН)")
     
     # Дополнительная информация о двигателе
     if selected_engine.engine_type.value == "chemical":
