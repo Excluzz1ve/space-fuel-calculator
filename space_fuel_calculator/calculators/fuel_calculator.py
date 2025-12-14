@@ -5,7 +5,7 @@ import math
 from dataclasses import dataclass
 from typing import Optional, Dict, Any
 
-from ..models.engine import Engine
+from ..models.engine import Engine, ChemicalEngine, IonEngine, NuclearEngine
 from ..models.planet import Planet
 from ..utils.exceptions import InvalidInputError, PhysicsViolationError
 
@@ -209,7 +209,7 @@ class FuelCalculator:
         if not isinstance(payload_mass, (int, float)):
             raise InvalidInputError(f"Масса полезной нагрузки должна быть числом, получено: {type(payload_mass)}")
         
-        if not isinstance(engine, Engine):
+        if not hasattr(engine, 'specific_impulse') or not hasattr(engine, 'thrust'):
             raise InvalidInputError(f"Двигатель должен быть экземпляром Engine, получено: {type(engine)}")
         
         # Проверка на NaN и бесконечность
@@ -252,7 +252,7 @@ class FuelCalculator:
         if not isinstance(payload_mass, (int, float)):
             raise InvalidInputError(f"Масса полезной нагрузки должна быть числом, получено: {type(payload_mass)}")
         
-        if not isinstance(engine, Engine):
+        if not hasattr(engine, 'specific_impulse') or not hasattr(engine, 'thrust'):
             raise InvalidInputError(f"Двигатель должен быть экземпляром Engine, получено: {type(engine)}")
         
         # Проверка на NaN и бесконечность
