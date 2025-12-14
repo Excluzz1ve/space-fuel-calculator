@@ -62,7 +62,7 @@ all_engines = get_all_engines()
 category = st.sidebar.selectbox(
     "Категория двигателя:",
     list(engine_categories.keys()),
-    help="🚀 Химические: Высокая тяга\n⚡ Ионные: Высокая эффективность\n⚛️ Ядерные: Экспериментальные"
+    help="🚀 Химические: Высокая тяга (сотни кН), быстрый старт\n⚡ Ионные: Низкая тяга (доли Н), но сверхэкономичные\n⚛️ Ядерные: Средняя тяга, экспериментальные"
 )
 
 engines_in_category = engine_categories[category]
@@ -212,7 +212,13 @@ with col2:
     st.subheader(f"🔧 {selected_engine.name}")
     st.write(f"**Тип:** {selected_engine.engine_type.value}")
     st.write(f"**Удельный импульс:** {selected_engine.specific_impulse:.0f} с")
-    st.write(f"**Тяга:** {selected_engine.thrust:,.0f} Н ({selected_engine.thrust/1000:.1f} кН)")
+    # Умное отображение тяги в зависимости от величины
+    if selected_engine.thrust < 1:
+        st.write(f"**Тяга:** {selected_engine.thrust:.3f} Н ({selected_engine.thrust*1000:.0f} мН)")
+    elif selected_engine.thrust < 1000:
+        st.write(f"**Тяга:** {selected_engine.thrust:.1f} Н")
+    else:
+        st.write(f"**Тяга:** {selected_engine.thrust:,.0f} Н ({selected_engine.thrust/1000:.1f} кН)")
     
     # Дополнительная информация о двигателе
     if selected_engine.engine_type.value == "chemical":
